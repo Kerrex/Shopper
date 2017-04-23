@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Shopper</string>
+    <string name="please_wait">Proszę czekać, próbujemy Cię znaleźć</string>
+    <string name="choose_shop">Wybierz ręcznie</string>
+    <string name="choose_shop_dialog_title">Wybierz sklep</string>
+    <string name="biedronka">Biedronka</string>
+    <string name="Lidl">Lidl</string>
+    <string-array name="choose_shop_entries">
+        <item>Biedronka</item>
+        <item>Lidl</item>
+        <item>Carrefour</item>
+    </string-array>
+    <string name="title_activity_do_shopping">DoShopping</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
