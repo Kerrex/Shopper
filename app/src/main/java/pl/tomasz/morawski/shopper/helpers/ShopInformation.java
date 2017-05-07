@@ -2,19 +2,10 @@ package pl.tomasz.morawski.shopper.helpers;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by tomek on 23.04.17.
  */
 
-@Getter
-@Setter
-@AllArgsConstructor(suppressConstructorProperties = true)
 public class ShopInformation implements Parcelable {
     private String name;
     private String address;
@@ -55,4 +46,34 @@ public class ShopInformation implements Parcelable {
             return new ShopInformation[size];
         }
     };
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public ShopInformation(String name, String address, Integer id) {
+        this.name = name;
+        this.address = address;
+        this.id = id;
+    }
 }

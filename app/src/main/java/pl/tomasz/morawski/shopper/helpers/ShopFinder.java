@@ -52,7 +52,8 @@ public class ShopFinder {
                     return new ShopInformation(name, address, id);
                 }
 
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
 
         }
         return null;

@@ -5,10 +5,10 @@ package pl.tomasz.morawski.shopper.helpers;
  */
 
 public enum Constants {
-    Biedronka(0),
-    Lidl(1),
-    Carrefour(2),
-    Tesco(3);
+    Biedronka(1),
+    Lidl(2),
+    Carrefour(3),
+    Tesco(4);
 
     public static final String GOOGLE_API_KEY = "AIzaSyB-abondJExHeMWV13veBqC-T9lMaohlx0";
     private int index;

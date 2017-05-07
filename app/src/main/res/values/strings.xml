@@ -19,4 +19,9 @@
     <string name="navigation_change_shop">Zmień sklep</string>
     <string name="navigation_show_history">Zobacz historię</string>
     <string name="navigation_settings">Ustawienia</string>
+    <string name="manual_input">Wprowadź ręcznie</string>
+    <string name="shopping_list">Lista zakupów</string>
+    <string name="title_activity_add_people">AddPeople</string>
+    <string name="add_new_person">Dodaj osobę</string>
+    <string name="next_stage">Dalej</string>
 </resources>

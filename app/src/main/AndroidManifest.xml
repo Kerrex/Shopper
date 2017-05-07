@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +22,11 @@
         <activity
             android:name=".DoShopping"
             android:label="@string/title_activity_do_shopping"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddToCart" />
+        <activity
+            android:name=".AddPeople"
+            android:label="@string/title_activity_add_people"></activity>
     </application>
 
 </manifest>

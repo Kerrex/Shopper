@@ -2,6 +2,7 @@ package pl.tomasz.morawski.shopper;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Debug;
 import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -38,26 +39,39 @@ public class FindingLocation extends AppCompatActivity {
     }
 
     private void findShop() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                List<String> shopNames = new ArrayList<>();
-                for (Constants shop : Constants.values()) {
-                    shopNames.add(shop.name());
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Looper.prepare();
+                        List<String> shopNames = new ArrayList<>();
+                        for (Constants shop : Constants.values()) {
+                            shopNames.add(shop.name());
+                        }
+
+                        GPSTracker tracker = new GPSTracker(FindingLocation.this);
+                        double lat = tracker.getLatitude();
+                        double lng = tracker.getLongitude();
+                        ShopFinder shopFinder = new ShopFinder(shopNames);
+                        ShopInformation info = shopFinder.findShop(lat, lng);
+
+                        if (info == null) {
+                            //spawnChooseShopDialog();
+                            return;
+                        }
+
+                        Intent intent = new Intent(getBaseContext(), DoShopping.class);
+                        intent.putExtra("ShopInformation", info);
+                        startActivity(intent);
+                    } catch (Exception ex) {
+
+                    }
                 }
-
-                GPSTracker tracker = new GPSTracker(FindingLocation.this);
-                double lat = tracker.getLatitude();
-                double lng = tracker.getLongitude();
-                ShopFinder shopFinder = new ShopFinder(shopNames);
-                ShopInformation info = shopFinder.findShop(lat, lng);
-
-                Intent intent = new Intent(getBaseContext(), DoShopping.class);
-                intent.putExtra("ShopInformation", info);
-                startActivity(intent);
-            }
-        }).start();
+            }).start();
+        } catch (Exception ex) {
+            spawnChooseShopDialog();
+        }
     }
 
     private void bindShowNotificaitonOnClick() {
@@ -65,7 +79,7 @@ public class FindingLocation extends AppCompatActivity {
         assert chooseShopButton != null;
         chooseShopButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 spawnChooseShopDialog();
             }
         });
@@ -76,24 +90,23 @@ public class FindingLocation extends AppCompatActivity {
         final View view = getLayoutInflater().inflate(R.layout.choose_shop_dialog, null);
         builder.setTitle(getResources().getString(R.string.choose_shop_dialog_title));
         builder.setView(view);
-        builder.setPositiveButton("Akceptuj",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Spinner spinner = (Spinner) view.findViewById(R.id.shop_spinner);
-                        Intent intent = new Intent(getBaseContext(), DoShopping.class);
-                        String selectedItem = String.valueOf(spinner.getSelectedItem());
-                        intent.putExtra("ShopInformation",
-                                new ShopInformation(selectedItem, "", Constants.valueOf(selectedItem).getIndex()));
-                        startActivity(intent);
-                    }
-                });
-        builder.setNegativeButton("Anuluj",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,
-                                        int whichButton) {
-                        findShop();
-                    }
-                });
+        builder.setPositiveButton("Akceptuj", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Spinner spinner = (Spinner) view.findViewById(R.id.shop_spinner);
+                Intent intent = new Intent(getBaseContext(), DoShopping.class);
+                String selectedItem = String.valueOf(spinner.getSelectedItem());
+                intent.putExtra("ShopInformation",
+                        new ShopInformation(selectedItem, "", Constants.valueOf(selectedItem).getIndex()));
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                findShop();
+            }
+        });
         builder.show();
     }
 }
