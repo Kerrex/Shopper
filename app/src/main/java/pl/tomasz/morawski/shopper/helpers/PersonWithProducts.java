@@ -39,6 +39,9 @@ public class PersonWithProducts implements Parcelable {
     public String getName() {
         return person.getName();
     }
+    public List<ProductInformation> getProducts() {
+        return products;
+    }
 
     protected PersonWithProducts(Parcel in) {
         if (in.readByte() == 0x01) {

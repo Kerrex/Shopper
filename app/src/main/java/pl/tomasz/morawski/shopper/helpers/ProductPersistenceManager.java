@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +69,30 @@ public class ProductPersistenceManager {
         return productList;
     }
 
+    public List<ProductInformation> loadFromFile(File file) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(file);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
+
+        List<ProductInformation> productList = new ArrayList<>();
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] lineArr = line.split(";");
+            if (lineArr.length != 5) continue;
+
+            ProductInformation info = getProductInfoWithSameId(productList,
+                    Integer.valueOf(lineArr[0]));
+            if (info != null) {
+                info.setQuantity(info.getQuantity() + Integer.valueOf(lineArr[4]));
+            } else {
+                productList.add(new ProductInformation(Integer.valueOf(lineArr[0]), lineArr[1],
+                        lineArr[2], Double.valueOf(lineArr[3]), Integer.valueOf(lineArr[4])));
+            }
+
+        }
+
+        return productList;
+    }
+
     public void saveToHistoryFolder(List<ProductInformation> products) throws IOException {
         Date now = new Date(System.currentTimeMillis());
         String currentDateInString = new SimpleDateFormat("dd-MM-yyyy-HH-mm").format(now);
@@ -101,6 +126,49 @@ public class ProductPersistenceManager {
             outputStream.write(stringToWrite.getBytes());
         }
         outputStream.close();
+    }
+
+    public void savePeopleWithProducts(List<PersonWithProducts> people) throws IOException {
+        Date now = new Date(System.currentTimeMillis());
+        String currentDateInString = new SimpleDateFormat("dd-MM-yyyy-HH-mm").format(now);
+        for (PersonWithProducts person : people) {
+            File file = new File(ctx.getFilesDir() + "/history/" + currentDateInString, person.getName());
+            file.mkdirs();
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            List<ProductInformation> personProducts = person.getProducts();
+            for (ProductInformation product : personProducts) {
+                fos.write(createStringToWrite(product).getBytes());
+            }
+            fos.close();
+        }
+    }
+
+    public List<String> getHistoryEntries() throws IOException  {
+        File file = new File(ctx.getFilesDir() + "/history");
+        List<String> entries = new ArrayList<>();
+        if (file.isDirectory()) {
+            for (File entry : file.listFiles()) {
+                entries.add(entry.getName());
+            }
+        }
+        return entries;
+    }
+
+    public List<PersonWithProducts> getHistory(String fileName) throws IOException {
+        File file = new File(ctx.getFilesDir() + "/history/" + fileName);
+        List<PersonWithProducts> people = new ArrayList<>();
+        if (file.isDirectory()) {
+            for (File personFile : file.listFiles()) {
+                PersonWithProducts person = new PersonWithProducts(new PersonInformation(personFile.getName()));
+                List<ProductInformation> products = loadFromFile(personFile);
+                for (ProductInformation product : products) {
+                    person.addProduct(product, product.getQuantity());
+                }
+                people.add(person);
+            }
+        }
+        return people;
     }
 
     public void clearTemporaryStorage() throws IOException {

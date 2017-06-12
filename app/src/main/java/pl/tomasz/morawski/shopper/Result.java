@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import pl.tomasz.morawski.shopper.helpers.PersonPersistenceManager;
 import pl.tomasz.morawski.shopper.helpers.PersonWithProducts;
@@ -20,10 +21,12 @@ import pl.tomasz.morawski.shopper.helpers.ProductPersistenceManager;
 public class Result extends AppCompatActivity {
 
     private PersonWithProducts[] peopleWithProducts;
+    private ProductPersistenceManager persistenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        persistenceManager = new ProductPersistenceManager(this);
         setContentView(R.layout.activity_result);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -32,8 +35,14 @@ public class Result extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                try {
+                    persistenceManager.savePeopleWithProducts(Arrays.asList(peopleWithProducts));
+                    Snackbar.make(getWindow().getDecorView().getRootView(),
+                            "Zapisano!", Snackbar.LENGTH_LONG)
+                            .show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
