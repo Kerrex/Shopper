@@ -35,5 +35,6 @@
         aby przypisać produkt do osoby</string>
     <string name="title_activity_result">Result</string>
     <string name="result_list">Do zapłaty:</string>
+    <string name="history_list">Historia</string>
 
 </resources>
