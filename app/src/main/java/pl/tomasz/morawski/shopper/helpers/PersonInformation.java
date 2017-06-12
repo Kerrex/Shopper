@@ -1,5 +1,6 @@
 package pl.tomasz.morawski.shopper.helpers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by tomek on 01.05.17.
  */
 
-public class PersonInformation {
+public class PersonInformation implements Serializable {
     private String name;
     private List<ProductInformation> productInformationList;
 

@@ -3,11 +3,14 @@ package pl.tomasz.morawski.shopper.helpers;
 import android.content.Context;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,5 +50,27 @@ public class PersonPersistenceManager {
             personList.add(new PersonInformation(line));
         }
         return personList;
+    }
+
+    public void savePeopleWithProducts(List<PersonWithProducts> people) throws IOException {
+        Date now = new Date(System.currentTimeMillis());
+        String currentDateInString = new SimpleDateFormat("dd-MM-yyyy-HH-mm").format(now);
+        for (PersonWithProducts person : people) {
+            File file = new File(ctx.getFilesDir() + "/history/" + currentDateInString, person.getName());
+            file.createNewFile();
+
+        }
+        rootDir.mkdirs();
+        FileOutputStream outputStream = ctx.openFileOutput("history/" + currentDateInString, Context.MODE_PRIVATE);
+        for (ProductInformation product : products) {
+            outputStream.write(createStringToWrite(product).getBytes());
+        }
+        outputStream.close();
+    }
+
+    public void clearTemporaryStorage() throws IOException {
+        FileOutputStream fileOutputStream = ctx.openFileOutput(TEMP_PEOPLE_CSV, Context.MODE_PRIVATE);
+        fileOutputStream.write("".getBytes());
+        fileOutputStream.close();
     }
 }

@@ -26,7 +26,14 @@
         <activity android:name=".AddToCart" />
         <activity
             android:name=".AddPeople"
-            android:label="@string/title_activity_add_people"></activity>
+            android:label="@string/title_activity_add_people" />
+        <activity
+            android:name=".Sharing"
+            android:label="@string/title_activity_sharing" />
+        <activity
+            android:name=".Result"
+            android:label="@string/title_activity_result"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

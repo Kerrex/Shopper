@@ -1,6 +1,7 @@
 package pl.tomasz.morawski.shopper;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -43,6 +44,8 @@ public class AddPeople extends AppCompatActivity {
     };
 
     private void goToNextStage() {
+        Intent intent = new Intent(getBaseContext(), Sharing.class);
+        startActivity(intent);
     }
 
     private void showAddPersonDialog() {

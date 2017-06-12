@@ -3,10 +3,17 @@ package pl.tomasz.morawski.shopper.helpers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.http.client.entity.UrlEncodedFormEntityHC4;
+import org.apache.http.client.methods.HttpPostHC4;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -52,5 +59,27 @@ public class ProductApiManager {
 
         return sb.toString();
 
+    }
+
+    public static void saveProductInformation(ProductInformation product, Integer marketId) {
+        try {
+            HttpsURLConnection connection = (HttpsURLConnection) new URL(URL + "save").openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            Map<String, String> request = new HashMap<>();
+            request.put("name", product.getName());
+            request.put("ean", product.getEan());
+            request.put("price", product.getPrice().toString());
+            request.put("marketId", marketId.toString());
+            OutputStream os = connection.getOutputStream();
+            String jsonToSend = new Gson().toJson(request);
+            os.write(jsonToSend.getBytes());
+            os.flush();
+            os.close();
+            connection.connect();
+            int response = connection.getResponseCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,11 +1,13 @@
 package pl.tomasz.morawski.shopper.helpers;
 
 
+import java.io.Serializable;
+
 /**
  * Created by tomek on 25.04.17.
  */
 
-public class ProductInformation {
+public class ProductInformation implements Serializable {
     private Integer id;
     private String name;
     private String ean;

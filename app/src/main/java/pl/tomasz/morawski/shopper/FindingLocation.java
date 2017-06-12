@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.tomasz.morawski.shopper.helpers.Constants;
+import pl.tomasz.morawski.shopper.helpers.DialogUtil;
 import pl.tomasz.morawski.shopper.helpers.GPSTracker;
 import pl.tomasz.morawski.shopper.helpers.ShopFinder;
 import pl.tomasz.morawski.shopper.helpers.ShopInformation;
@@ -86,27 +87,6 @@ public class FindingLocation extends AppCompatActivity {
     }
 
     private void spawnChooseShopDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(FindingLocation.this);
-        final View view = getLayoutInflater().inflate(R.layout.choose_shop_dialog, null);
-        builder.setTitle(getResources().getString(R.string.choose_shop_dialog_title));
-        builder.setView(view);
-        builder.setPositiveButton("Akceptuj", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Spinner spinner = (Spinner) view.findViewById(R.id.shop_spinner);
-                Intent intent = new Intent(getBaseContext(), DoShopping.class);
-                String selectedItem = String.valueOf(spinner.getSelectedItem());
-                intent.putExtra("ShopInformation",
-                        new ShopInformation(selectedItem, "", Constants.valueOf(selectedItem).getIndex()));
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                findShop();
-            }
-        });
-        builder.show();
+        DialogUtil.spawnChooseShopDialog(this);
     }
 }

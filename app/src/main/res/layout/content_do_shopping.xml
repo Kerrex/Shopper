@@ -12,11 +12,12 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:paddingStart="16dp"
         android:paddingTop="15dp"
         android:text="@string/shopping_list"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="-3dp" />
 
     <LinearLayout
         android:id="@+id/shopping_main_layout"
@@ -37,6 +38,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textAlignment="viewStart" />
         </TableRow>
 
         <TableRow

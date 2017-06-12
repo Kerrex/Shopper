@@ -24,4 +24,16 @@
     <string name="title_activity_add_people">AddPeople</string>
     <string name="add_new_person">Dodaj osobę</string>
     <string name="next_stage">Dalej</string>
+    <string name="people_list">Lista osób</string>
+    <string name="title_activity_sharing">Sharing</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="next_item">Następny przedmiot</string>
+    <string name="previous_item">Poprzedni przedmiot</string>
+    <string name="sharing_description">Wybierz ilość, a nastepnie kliknij na odpowiedni przycisk,
+        aby przypisać produkt do osoby</string>
+    <string name="title_activity_result">Result</string>
+    <string name="result_list">Do zapłaty:</string>
+
 </resources>
