@@ -133,7 +133,7 @@ public class ProductPersistenceManager {
         String currentDateInString = new SimpleDateFormat("dd-MM-yyyy-HH-mm").format(now);
         for (PersonWithProducts person : people) {
             File file = new File(ctx.getFilesDir() + "/history/" + currentDateInString, person.getName());
-            file.mkdirs();
+            file.getParentFile().mkdirs();
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);
             List<ProductInformation> personProducts = person.getProducts();

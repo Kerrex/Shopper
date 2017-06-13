@@ -49,6 +49,7 @@ public class History extends AppCompatActivity {
                     List<PersonWithProducts> people = persistenceManager.getHistory(date);
                     Intent intent = new Intent(getBaseContext(), Result.class);
                     intent.putExtra("PeopleWithProducts", people.toArray(new PersonWithProducts[0]));
+                    intent.putExtra("isHistory", true);
                     startActivity(intent);
                 } catch (IOException e) {
                     e.printStackTrace();

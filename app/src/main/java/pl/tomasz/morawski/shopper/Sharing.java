@@ -65,6 +65,7 @@ public class Sharing extends AppCompatActivity {
         try {
             productInformations = productPersistenceManager.loadFromTemporaryStorage();
             goToNextProduct();
+            setQuantityEditText();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,8 +75,8 @@ public class Sharing extends AppCompatActivity {
     }
 
     private void prepareAddSubstractEditTextButtons() {
-        ImageButton addButton = (ImageButton) findViewById(R.id.addQ);
-        ImageButton substractButton = (ImageButton) findViewById(R.id.substractQ);
+        Button addButton = (Button) findViewById(R.id.addQ);
+        Button substractButton = (Button) findViewById(R.id.substractQ);
         final EditText quantityEditText = (EditText) findViewById(R.id.add_to_cart_quantity);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

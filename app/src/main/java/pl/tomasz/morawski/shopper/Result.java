@@ -1,5 +1,6 @@
 package pl.tomasz.morawski.shopper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ public class Result extends AppCompatActivity {
 
     private PersonWithProducts[] peopleWithProducts;
     private ProductPersistenceManager persistenceManager;
+    private boolean isHistory = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class Result extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        isHistory = getIntent().getBooleanExtra("isHistory", false);
         FloatingActionButton save = (FloatingActionButton) findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +47,21 @@ public class Result extends AppCompatActivity {
                 }
             }
         });
+
+        FloatingActionButton exit = (FloatingActionButton) findViewById(R.id.result_exit);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), FindingLocation.class);
+                startActivity(intent);
+            }
+        });
+        if (isHistory) {
+            save.setVisibility(View.INVISIBLE);
+            save.setEnabled(false);
+            exit.setVisibility(View.INVISIBLE);
+            exit.setEnabled(false);
+        }
 
         Parcelable[] parcels = getIntent().getParcelableArrayExtra("PeopleWithProducts");
         peopleWithProducts = new PersonWithProducts[parcels.length];

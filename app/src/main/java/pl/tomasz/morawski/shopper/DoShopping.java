@@ -189,6 +189,9 @@ public class DoShopping extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.show_history) {
+            Intent intent = new Intent(getBaseContext(), History.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -202,8 +205,9 @@ public class DoShopping extends AppCompatActivity
 
         if (id == R.id.change_shop) {
             DialogUtil.spawnChooseShopDialog(this);
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.show_history) {
+            Intent intent = new Intent(getBaseContext(), History.class);
+            startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
 
         }
